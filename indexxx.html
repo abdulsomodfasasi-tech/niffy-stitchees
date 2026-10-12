@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIFFY STITCHES</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#fffaf7;color:#292020;line-height:1.6}
+header,footer{background:#4b1238;color:white;text-align:center;padding:20px}
+header h1{letter-spacing:2px}
+nav{margin-top:12px}
+nav a{color:white;text-decoration:none;margin:0 8px}
+.hero{text-align:center;padding:65px 20px;background:linear-gradient(135deg,#f3dce9,#fff1e5)}
+.hero h2{font-size:34px;color:#4b1238}
+.hero p{margin:12px}
+.shop-button,.product button,.cart button{display:inline-block;background:#4b1238;color:white;border:0;padding:11px 17px;border-radius:5px;text-decoration:none;cursor:pointer;margin-top:8px}
+section{max-width:1200px;margin:auto;padding:40px 20px}
+section h2{text-align:center;color:#4b1238;margin-bottom:24px}
+.filters{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-bottom:25px}
+.filter-btn{padding:9px 13px;border:1px solid #4b1238;border-radius:20px;background:white;color:#4b1238;cursor:pointer}
+.filter-btn.active,.filter-btn:hover{background:#4b1238;color:white}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.product{background:white;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px #00000012}
+.product img{width:100%;height:270px;object-fit:cover;display:block}
+.product-info{padding:16px}
+.product h3{color:#4b1238}
+.price{font-size:19px;font-weight:bold;margin:8px 0}
+.cart{background:#f6e9f0;border-radius:10px;padding:20px}
+.cart li{margin:9px 0}
+.cart-total{font-size:20px;font-weight:bold;margin-top:15px}
+.remove-btn{background:#9b3030!important;margin-left:8px}
+.about{text-align:center;max-width:750px}
+.contact{text-align:center;background:#f6e9f0;border-radius:10px;padding:25px}
+.contact p{margin:8px}
+@media(max-width:600px){header h1{font-size:25px}nav a{display:inline-block;margin:5px}.hero h2{font-size:27px}}
+</style>
+</head>
+<body>
+<header>
+<h1>NIFFY STITCHES</h1>
+<p>Fashion • Elegance • Quality</p>
+<nav>
+<a href="#home">Home</a><a href="#shop">Shop</a>
+<a href="#cart">Cart</a><a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<div class="hero" id="home">
+<h2>Welcome to NIFFY STITCHES</h2>
+<p>Beautiful traditional wear and quality fabrics for every occasion.</p>
+<a class="shop-button" href="#shop">Explore Our Products</a>
+</div>
+
+<section id="shop">
+<h2>Our Products</h2>
+<div class="filters">
+<button class="filter-btn active" onclick="filterProducts('All',this)">All Products</button>
+<button class="filter-btn" onclick="filterProducts('Men’s Jalamia',this)">Men’s Jalamia</button>
+<button class="filter-btn" onclick="filterProducts('Abaya',this)">Abaya</button>
+<button class="filter-btn" onclick="filterProducts('Ankara Fabric',this)">Ankara Fabric</button>
+<button class="filter-btn" onclick="filterProducts('Lace Fabric',this)">Lace Fabric</button>
+<button class="filter-btn" onclick="filterProducts('Kampala Fabric',this)">Kampala Fabric</button>
+</div>
+<div class="products" id="product-list"></div>
+<p id="image-message" style="text-align:center;margin-top:15px"></p>
+</section>
+
+<section id="cart">
+<h2>Your Shopping Cart</h2>
+<div class="cart">
+<ul id="cart-items"><li>Your cart is empty.</li></ul>
+<p class="cart-total">Total: ₦<span id="cart-total">0</span></p>
+<button onclick="checkoutWhatsApp()">Order on WhatsApp</button>
+<button onclick="checkoutEmail()">Order by Email</button>
+<button onclick="clearCart()">Clear Cart</button>
+</div>
+</section>
+
+<section id="about">
+<h2>About NIFFY STITCHES</h2>
+<div class="about">
+<p>NIFFY STITCHES offers traditional clothing and beautiful fabrics for different occasions.</p>
+<p>Our collection includes Men’s Jalamia, Abaya, Ankara fabric, Lace fabric and Kampala fabric.</p>
+<p><strong>Director:</strong> Lasisi Nofisat</p>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact Us</h2>
+<div class="contact">
+<p><strong>Brand:</strong> NIFFY STITCHES</p>
+<p><strong>Director:</strong> Lasisi Nofisat</p>
+<p><strong>Phone:</strong> 08034228664</p>
+<p><strong>Email:</strong> niffystitches@gmail.com</p>
+<a class="shop-button" href="https://wa.me/2348034228664" target="_blank" rel="noopener">Chat on WhatsApp</a>
+</div>
+</section>
+
+<footer>
+<p>&copy; <span id="year"></span> NIFFY STITCHES. All rights reserved.</p>
+</footer>
+
+<script>
+const products=[
+{id:1,name:"Men’s Jalamia",category:"Men’s Jalamia",price:18000,
+image: "https://www.habeebat.com/wp-content/uploads/2022/12/Waleed-1.jpg",
+description:"Stylish black traditional Jalamia for men."},
+
+{id:2,name:"Elegant Abaya",category:"Abaya",price:25000,
+image:"https://www.hadiyasouq.africa/cdn/shop/files/ClassyBlackAbayawithEmbroidery_1023x1533.jpg?v=1758397745",
+description:"Elegant Abaya for modest fashion."},
+
+{id:3,name:"Ankara Fabric",category:"Ankara Fabric",price:12000,
+image:"https://afriqueclothingstore.com/cdn/shop/products/20211202_212308_1400x.jpg?v=1698659276",
+description:"Colourful Ankara fabric material for sewing."},
+
+{id:4,name:"Lace Fabric",category:"Lace Fabric",price:20000,
+image:"https://s.alicdn.com/@sc04/kf/H4f7653ad25004911b2e2e0d873b781110/3130-Wholesale-100-Cotton-African-Lace-Fabric-2021-High-Quality-Dubai-Lace-Embroidered-Nigerian-Swiss-Voile-Lace-in-Switzerland.jpg",
+description:"Decorative lace fabric for special occasions."},
+
+{id:5,name:"Kampala Fabric",category:"Kampala Fabric",price:10000,
+image:"https://d13k5xkmdqbhs.cloudfront.net/products/EX8JUK3/9S72USYB-original.jpg",
+description:"Kampala fabric material for your fashion designs."}
+];
+
+let cart=[];
+let currentFilter="All";
+const failedImages=new Set();
+
+function money(n){return n.toLocaleString("en-NG")}
+
+function displayProducts(){
+const list=document.getElementById("product-list");
+list.innerHTML="";
+const matches=products.filter(p=>
+(currentFilter==="All"||p.category===currentFilter)&&!failedImages.has(p.id));
+
+matches.forEach(p=>{
+const card=document.createElement("article");
+card.className="product";
+const img=document.createElement("img");
+img.src=p.image;
+img.alt=p.name;
+img.loading="lazy";
+img.onerror=()=>{
+failedImages.add(p.id);
+card.remove();
+document.getElementById("image-message").textContent=
+"A product image failed to load. Check your internet connection or change its image URL.";
+};
+const info=document.createElement("div");
+info.className="product-info";
+const name=document.createElement("h3");
+name.textContent=p.name;
+const desc=document.createElement("p");
+desc.textContent=p.description;
+const price=document.createElement("p");
+price.className="price";
+price.textContent="₦"+money(p.price);
+const btn=document.createElement("button");
+btn.textContent="Add to Cart";
+btn.onclick=()=>addToCart(p.id);
+info.append(name,desc,price,btn);
+card.append(img,info);
+list.appendChild(card);
+});
+
+if(matches.length===0)list.innerHTML="<p>No products with working images in this category.</p>";
+}
+
+function filterProducts(category,button){
+currentFilter=category;
+document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+displayProducts();
+}
+
+function addToCart(id){
+const p=products.find(x=>x.id===id);
+const item=cart.find(x=>x.id===id);
+if(item)item.quantity++;
+else cart.push({...p,quantity:1});
+displayCart();
+}
+
+function removeFromCart(id){
+cart=cart.filter(x=>x.id!==id);
+displayCart();
+}
+
+function clearCart(){cart=[];displayCart()}
+
+function displayCart(){
+const list=document.getElementById("cart-items");
+list.innerHTML="";
+if(cart.length===0)list.innerHTML="<li>Your cart is empty.</li>";
+cart.forEach(item=>{
+const li=document.createElement("li");
+li.append(document.createTextNode(
+item.name+" × "+item.quantity+" — ₦"+money(item.price*item.quantity)+" "));
+const btn=document.createElement("button");
+btn.className="remove-btn";
+btn.textContent="Remove";
+btn.onclick=()=>removeFromCart(item.id);
+li.appendChild(btn);
+list.appendChild(li);
+});
+document.getElementById("cart-total").textContent=
+money(cart.reduce((sum,x)=>sum+x.price*x.quantity,0));
+}
+
+function orderMessage(){
+if(!cart.length){alert("Your cart is empty. Add a product first.");return null}
+let message="Hello NIFFY STITCHES! I want to place an order:\n\n";
+cart.forEach(x=>message+=x.name+" x "+x.quantity+" = ₦"+money(x.price*x.quantity)+"\n");
+message+="\nTotal: ₦"+money(cart.reduce((sum,x)=>sum+x.price*x.quantity,0));
+message+="\nPlease confirm availability and delivery details.";
+return message;
+}
+
+function checkoutWhatsApp(){
+const message=orderMessage();
+if(message)window.open("https://wa.me/2348034228664?text="+encodeURIComponent(message),"_blank");
+}
+
+function checkoutEmail(){
+const message=orderMessage();
+if(message)window.location.href="mailto:niffystitches@gmail.com?subject="+
+encodeURIComponent("Order from NIFFY STITCHES")+"&body="+encodeURIComponent(message);
+}
+
+document.getElementById("year").textContent=new Date().getFullYear();
+displayProducts();
+displayCart();
+</script>
+</body>
+</html>
